@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Love Forever</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
       overflow: hidden;
-      background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+      background: linear-gradient(135deg, #ffdee9, #b5fffc);
       font-family: 'Segoe UI', sans-serif;
       height: 100vh;
       width: 100vw;
+      position: relative;
     }
 
     .love-text {
@@ -23,6 +26,7 @@
       text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
       animation: glow 1.5s infinite alternate;
       z-index: 1000;
+      white-space: nowrap;
     }
 
     @keyframes glow {
@@ -38,7 +42,7 @@
       border-radius: 15px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
       opacity: 0.8;
-      animation: floatImage 30s linear infinite;
+      animation: floatImage 30s ease-in-out infinite;
     }
 
     @keyframes floatImage {
@@ -47,7 +51,7 @@
         opacity: 0.8;
       }
       50% {
-        transform: translateY(-200px) scale(1.2) rotate(20deg);
+        transform: translateY(-150px) scale(1.1) rotate(15deg);
         opacity: 1;
       }
       100% {
@@ -63,6 +67,7 @@
       background: #ff4d6d;
       transform: rotate(45deg);
       opacity: 0.8;
+      bottom: -20px;
     }
 
     .heart::before, .heart::after {
@@ -91,15 +96,37 @@
       100% {
         bottom: 120%;
         opacity: 0;
-        transform: translateX(50px) rotate(360deg);
+        transform: translateX(var(--driftX, 50px)) rotate(360deg);
       }
     }
 
+    @media (max-width: 768px) {
+      .love-text {
+        font-size: 30px;
+      }
+      .image {
+        width: 60px;
+        height: 60px;
+      }
+      .heart {
+        width: 12px;
+        height: 12px;
+      }
+      .heart::before, .heart::after {
+        width: 12px;
+        height: 12px;
+      }
+    }
   </style>
 </head>
 <body>
 
 <h1 class="love-text">Anh Yêu Em 💖</h1>
+
+<audio id="background-music" autoplay loop>
+  <source src="inside-you" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
 
 <script>
   const imageUrls = [
@@ -125,14 +152,25 @@
   function createHeart() {
     const heart = document.createElement('div');
     heart.className = 'heart';
-    heart.style.left = Math.random() * 100 + 'vw';
+    const startX = Math.random() * 100;
+    const driftX = (Math.random() - 0.5) * 100;
+    heart.style.left = startX + 'vw';
     heart.style.animation = `floatUp ${4 + Math.random() * 2}s linear forwards`;
+    heart.style.setProperty('--driftX', driftX + 'px');
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 7000);
   }
 
   setInterval(createMovingImage, 1000);
   setInterval(createHeart, 400);
+
+  // Khởi động nhạc nếu người dùng click vào màn hình
+  document.addEventListener('click', () => {
+    const music = document.getElementById('background-music');
+    if (music.paused) {
+      music.play();
+    }
+  });
 </script>
 
 </body>
