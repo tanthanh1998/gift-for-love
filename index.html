@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Forever</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .love-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
+      color: #ff4d6d;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+      animation: glow 1.5s infinite alternate;
+      z-index: 1000;
+    }
+
+    @keyframes glow {
+      from { opacity: 0.7; }
+      to { opacity: 1; }
+    }
+
+    .image {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      opacity: 0.8;
+      animation: floatImage 30s linear infinite;
+    }
+
+    @keyframes floatImage {
+      0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-200px) scale(1.2) rotate(20deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1) rotate(360deg);
+        opacity: 0.8;
+      }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff4d6d;
+      transform: rotate(45deg);
+      opacity: 0.8;
+    }
+
+    .heart::before, .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff4d6d;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        bottom: -20px;
+        opacity: 0.7;
+        transform: translateX(0) rotate(45deg);
+      }
+      100% {
+        bottom: 120%;
+        opacity: 0;
+        transform: translateX(50px) rotate(360deg);
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<h1 class="love-text">Anh Yêu Em Mãi Mãi 💖</h1>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2023/04/04/audio_eea021bc20.mp3" type="audio/mp3">
+</audio>
+
+<script>
+  const imageUrls = [
+    '/images/image-1.jpg',
+    '/images/image-2.jpg',
+    '/images/image-3.jpg',
+    '/images/image-4.jpg',
+    '/images/image-5.jpg',
+    '/images/image-6.jpg',
+  ];
+
+  function createMovingImage() {
+    const img = document.createElement('img');
+    img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+    img.className = 'image';
+    img.style.top = Math.random() * 80 + 'vh';
+    img.style.left = Math.random() * 90 + 'vw';
+    img.style.animationDuration = (20 + Math.random() * 10) + 's';
+    document.body.appendChild(img);
+    setTimeout(() => img.remove(), 30000);
+  }
+
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animation = `floatUp ${4 + Math.random() * 2}s linear forwards`;
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+  }
+
+  setInterval(createMovingImage, 1000);
+  setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
